@@ -1,3 +1,8 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
+
+
 function onEdit(e) {
   var sheetName = SpreadsheetApp.getActiveSheet().getName();
   if (sheetName == QUEST_SHEET){
@@ -31,7 +36,7 @@ function onEdit(e) {
     // Get cell edited - If it's B6 then do something
     var cellAddress = e.range.getA1Notation();
     var temp_val;
-  
+
     switch (cellAddress) {
       case heroClassAddress:
         var cell, rule, args, myTarget, eq;
@@ -93,7 +98,7 @@ function onEdit(e) {
     }
 
     set_mundra_spirits();
-    write_export_string(); 
+    write_export_string();
     //myFunction_builder();
     quest = new Quest();
   }
