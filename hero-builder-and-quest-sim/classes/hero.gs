@@ -21,6 +21,7 @@ class Hero {
     mundra,
     atkMod,
     defMod,
+    quest,
   ) {
     // Primary Characteristics
     this.heroClass = heroClass;
@@ -46,8 +47,8 @@ class Hero {
     this.armadillo = armadillo;
     this.dinosaur  = dinosaur;
     this.lizard    = lizard;
-    this.mundra    = mundra;
     this.shark     = shark;
+    this.mundra   = mundra;
 
     // Flags
     this.guaranteedCrit = false;
@@ -57,10 +58,10 @@ class Hero {
     this.surviveChance = 0.0;
     this.targetChance  = 0.0;
 
-    this.dmgThisFight = 0.0;
-    this.dmgDealtAvg  = 0.0;
-    this.dmgDealtMax  = 0.0;
-    this.dmgDealtMin  = Infinity;
+    this.totalSimDmg = 0.0;
+    this.dmgDealtAvg = 0.0;
+    this.dmgDealtMax = 0.0;
+    this.dmgDealtMin = Infinity;
 
     this.hpRemainAvg = 0.0;
     this.hpRemainMax = 0.0;
@@ -115,6 +116,14 @@ class Hero {
   get evasionChance() {
     var rawEvasion = this.eva + (this.berserkerStage * 0.1) + this.ninjaEva;
     return Math.min(rawEvasion, 0.75);
+  }
+
+  // Mundra
+  updateMundraDef() {
+    if (!this.quest.mob.isBoss) {
+      this.mundra = 0;
+    }
+    this.def *= (this.defMod + 0.2 + this.mundra);
   }
 
   // Hero Classes
@@ -181,11 +190,29 @@ class Hero {
     }
   }
 
-  setMundra(mobIsBoss) {
-    if (!mobIsBoss) {
-      this.mundra = 0;
+  criticalHitCheck() {
+    var totalCritChance = this.critChance + this.ninjaMod + this.quest.champion.rudoMod;
+    return (this.guaranteedCrit || (Math.random() < totalCritChance));
+  }
+
+  attack(target) {
+    var damage;
+    if (!target.evasionCheck()) {
+      // Mob doesn't evade the attack
+      damage = this.atk * (
+        this.atkMod
+        + (0.2 * this.mundra)
+        + (this.quest.sharkActive * 0.2 * this.shark)
+        + (this.quest.dinosaurActive * this.dinosaur * 0.25)
+        + (0.1 * this.berserkerLevel * this.berserkerStage)
+      );
+      if (this.criticalHitCheck()) {
+        damage *= this.critMult;
+      }
+      target.hp -= damage;
+      this.totalSimDmg += damage;
     }
-    this.def *= (this.defMod + 0.2 + this.mundra);
+    this.guaranteedCrit = false;
   }
 
   updateHpStats() {
@@ -195,14 +222,14 @@ class Hero {
   }
 
   updateDmgStats() {
-    this.dmgDealtMin = Math.min(this.dmgDealtMin, this.dmgThisFight);
-    this.dmgDealtMax = Math.max(this.dmgDealtMax, this.dmgThisFight);
-    this.dmgDealtAvg += this.dmgThisFight;
+    this.dmgDealtMin = Math.min(this.dmgDealtMin, this.totalSimDmg);
+    this.dmgDealtMax = Math.max(this.dmgDealtMax, this.totalSimDmg);
+    this.dmgDealtAvg += this.totalSimDmg;
   }
 
   reset() {
     this.hp = this.hpMax;
-    this.dmgThisFight = 0;
+    this.totalSimDmg = 0;
     this.takenDamage = false;
     this.guaranteedCrit = false;
     this.surviveChance = this.isCleric ? 1.2 : this.armadillo * 15 / 100.0;

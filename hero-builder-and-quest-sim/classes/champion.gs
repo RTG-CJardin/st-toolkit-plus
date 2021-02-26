@@ -10,7 +10,6 @@ class Champion {
     this.quest = quest;
     this.atkMod = 0;
     this.defMod = 0;
-    this.rudoMod = 0;
     this.liluHeal = 0;
 
     this.countClasses(heroes);

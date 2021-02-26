@@ -24,6 +24,14 @@ class Quest {
     this.populateSimStats();
   }
 
+  // Spirit Status
+  get sharkActive() {
+    return this.mob.hp < this.mob.hpMax / 2.0;
+  }
+  get dinosaurActive() {
+    return this.round == 1;
+  }
+
   get heroesAlive() {
     var aliveCount = 0;
     for (var i = 0; i < this.heroes.length; i ++) {
@@ -105,7 +113,7 @@ class Quest {
     );
     this.mob.barrensCheck(this.heroes);
     for (var i = 0; i < this.heroes.length; i ++) {
-      this.heroes[i].setMundra(this.mob.isBoss);
+      this.heroes[i].updateMundraDef();
     }
   }
 
@@ -156,7 +164,6 @@ class Quest {
   runSimulation() {
     var hero;
     this.mob.reset();
-    this.determineDamageTaken();
 
     for (var simNumber = 0; simNumber < SIM_COUNT; simNumber ++) {
       this.resetHeroes();
@@ -165,20 +172,16 @@ class Quest {
       this.continueFight = true;
       this.updateTarget = true;
       this.round = 0;
-      this.sharkActive = 0;
-      this.dinosaurActive = 1;
 
       // Start Quest
       while (this.continueFight) {
         this.round ++;
 
         this.setTargetingChances();
-        this.targetedHeroes = this.determineTargets();
+        this.determineTargets();
 
-        this.mobAttack(this.targetedHeroes);
+        this.mobAttack();
         this.heroesAttack();
-
-        this.dinosaurActive = 0;
 
         if (this.mob.hp <= 0)  {
           this.continueFight = false;
@@ -201,7 +204,7 @@ class Quest {
         }
 
         if (!this.continueFight) {
-          // End the fight,
+          // End the fight
           for (var i = 0; i < this.heroes.length; i ++) {
             this.heroes[i].updateDmgStats();
           }
@@ -219,7 +222,6 @@ class Quest {
               if (this.champion.name == LILU) {
                 hero.hp += this.champion.liluHeal;
               }
-              hero.berserkerHit();
             }
           }
         }
@@ -228,25 +230,26 @@ class Quest {
   }
 
   setTargetingChances() {
-    var hero;
     if (this.updateTarget) {
       // Update the targeting chances after any of the heroes die
       var totalTargetingChance = 0.0;
       for (var i = 0; i < this.heroes.length; i ++) {
         // Clear all targeting chances
-        hero.targetChance = 0;
+        this.heroes[i].targetChance = 0;
       }
       // Compute hero chance to get targeted
       for (var i = 0; i < this.heroes.length; i ++) {
-        if (hero.isAlive) {
+        if (this.heroes[i].isAlive) {
           for (var j = i; j < this.heroes.length; j ++) {
-            this.heroes[j].targetChance += hero.threat;
+            this.heroes[j].targetChance += this.heroes[i].threat;
           }
-          totalTargetingChance += hero.threat;
+          totalTargetingChance += this.heroes[i].threat;
         }
       }
       for (var i = 0; i < this.heroes.length; i ++) {
-        hero.targetChance = hero.targetChance / totalTargetingChance;
+        this.heroes[i].targetChance = (
+          this.heroes[i].targetChance / totalTargetingChance
+        );
       }
       this.updateTarget = false;
     }
@@ -272,16 +275,16 @@ class Quest {
     }
   }
 
-  mobAttack(targetedHeroes) {
+  mobAttack() {
     var roundDmg, hero;
 
-    for (var i = 0; i < targetedHeroes.length; i ++) {
-      hero = targetedHeroes[i];
+    for (var i = 0; i < this.mob.atkTargets.length; i ++) {
+      hero = this.mob.atkTargets[i];
       if (hero.isDead) {
         continue;
       }
 
-      if (targetedHeroes.length > 1) {
+      if (this.mob.atkTargets.length > 1) {
         // AoE Attack
         roundDmg = Math.ceil(hero.dmgTaken * this.mob.aoeDmg)
       } else if (Math.random() < this.mob.critChance * this.mob.critChanceMod) {
@@ -314,34 +317,10 @@ class Quest {
   }
 
   heroesAttack() {
-    var hero;
     for (var i = 0; i < this.heroes.length; i ++) {
-      hero = this.heroes[i];
-
-      if (hero.isAlive) {
-        if (Math.random() > this.mob.eva) {
-          this.damage = hero.atk * (
-            hero.atkMod
-            + (0.2 * hero.mundra)
-            + (this.sharkActive * 0.2 * hero.shark)
-            + (this.dinosaurActive * hero.dinosaur * 0.25)
-            + (0.1 * hero.berserkerLevel * hero.berserkerStage)
-          );
-          if (hero.guaranteedCrit
-              || Math.random() < (hero.critChance + hero.ninjaMod + hero.rudoMod)
-          ) {
-            this.damage *= hero.critMult;
-          }
-          this.mob.hp -= this.damage;
-          hero.dmgThisFight += this.damage;
-        }
+      if (this.heroes[i].isAlive) {
+        this.heroes[i].attack(this.mob)
       }
-
-      if (this.mob.hp < this.mob.hpMax / 2) {
-        this.sharkActive = 1;
-      }
-
-      hero.guaranteedCrit = false;
     }
   }
 

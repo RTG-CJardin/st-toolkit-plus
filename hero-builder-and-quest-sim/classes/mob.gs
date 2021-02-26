@@ -61,6 +61,10 @@ class Mob {
     return this._isBoss != NO
   }
 
+  evasionCheck() {
+    return Math.random() < this.eva
+  }
+
   reset() {
     this.hp = this.hpMax;
   }
