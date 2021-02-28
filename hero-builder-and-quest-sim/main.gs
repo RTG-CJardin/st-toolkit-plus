@@ -2,14 +2,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-
 function onEdit(e) {
   var sheetName = SpreadsheetApp.getActiveSheet().getName();
-  if (sheetName == QUEST_SHEET){
+  if (sheetName == QUEST_SHEET) {
     quest = new Quest();
-  }
-  else if (HERO_SHEETS.has(sheetName)) {
-
+  } else if (HERO_SHEETS.has(sheetName)) {
     var heroClassAddress = "C3";
 
     var itemTypeSlot1Address = "B6";
@@ -19,14 +16,14 @@ function onEdit(e) {
     var itemTypeSlot5Address = "B10";
     var itemTypeSlot6Address = "B11";
 
-    var setAllQualityAddress  = "D4";
+    var setAllQualityAddress = "D4";
     var setAllElementsAddress = "E4";
-    var setAllSpiritsAddress  = "F4";
+    var setAllSpiritsAddress = "F4";
 
     var importAddress = "E2";
 
-    var typeColumn    = 2;
-    var itemColumn    = 3;
+    var typeColumn = 2;
+    var itemColumn = 3;
     var qualityColumn = 4;
     var elementColumn = 5;
     var spiritsColumn = 6;
@@ -42,7 +39,7 @@ function onEdit(e) {
         var cell, rule, args, myTarget, eq;
 
         // Iterate through the item slots and set to the class defaults
-        for (var itemSlot = 6; itemSlot < 12; itemSlot ++) {
+        for (var itemSlot = 6; itemSlot < 12; itemSlot++) {
           cellA1 = "B" + itemSlot;
           cell = SpreadsheetApp.getActive().getRange(cellA1);
           rule = cell.getDataValidation();
@@ -50,46 +47,62 @@ function onEdit(e) {
           myTarget = args[0].getValues();
           eq = myTarget[0][0];
 
-          SpreadsheetApp.getActiveSheet().getRange(itemSlot, typeColumn).setValue("");
-          SpreadsheetApp.getActiveSheet().getRange(itemSlot, itemColumn).setValue("");
-          SpreadsheetApp.getActiveSheet().getRange(itemSlot, elementColumn).setValue("");
-          SpreadsheetApp.getActiveSheet().getRange(itemSlot, spiritsColumn).setValue("");
+          SpreadsheetApp.getActiveSheet()
+            .getRange(itemSlot, typeColumn)
+            .setValue("");
+          SpreadsheetApp.getActiveSheet()
+            .getRange(itemSlot, itemColumn)
+            .setValue("");
+          SpreadsheetApp.getActiveSheet()
+            .getRange(itemSlot, elementColumn)
+            .setValue("");
+          SpreadsheetApp.getActiveSheet()
+            .getRange(itemSlot, spiritsColumn)
+            .setValue("");
           SpreadsheetApp.getActiveSheet().getRange(cellA1).setValue(eq);
         }
-        for (var skill = 1; skill <= 4; skill ++) {
-          SpreadsheetApp.getActiveSheet().getRange(skillRow, skill).setValue("");
+        for (var skill = 1; skill <= 4; skill++) {
+          SpreadsheetApp.getActiveSheet()
+            .getRange(skillRow, skill)
+            .setValue("");
         }
         break;
 
       case itemTypeSlot1Address:
-        clear_item(1)
+        clear_item(1);
         break;
       case itemTypeSlot2Address:
-        clear_item(2)
+        clear_item(2);
         break;
       case itemTypeSlot3Address:
-        clear_item(3)
+        clear_item(3);
         break;
       case itemTypeSlot4Address:
-        clear_item(4)
+        clear_item(4);
         break;
       case itemTypeSlot5Address:
-        clear_item(5)
+        clear_item(5);
         break;
       case itemTypeSlot6Address:
-        clear_item(6)
+        clear_item(6);
         break;
 
       case setAllQualityAddress:
-        temp_val = SpreadsheetApp.getActiveSheet().getRange(4, qualityColumn).getValue();
+        temp_val = SpreadsheetApp.getActiveSheet()
+          .getRange(4, qualityColumn)
+          .getValue();
         set_all_items(qualityColumn, temp_val);
         break;
       case setAllElementsAddress:
-        temp_val = SpreadsheetApp.getActiveSheet().getRange(4, elementColumn).getValue();
+        temp_val = SpreadsheetApp.getActiveSheet()
+          .getRange(4, elementColumn)
+          .getValue();
         set_all_items(elementColumn, temp_val);
         break;
       case setAllSpiritsAddress:
-        temp_val = SpreadsheetApp.getActiveSheet().getRange(4, spiritsColumn).getValue();
+        temp_val = SpreadsheetApp.getActiveSheet()
+          .getRange(4, spiritsColumn)
+          .getValue();
         set_all_items(spiritsColumn, temp_val);
         break;
 
@@ -105,14 +118,18 @@ function onEdit(e) {
 }
 
 function clear_item(item) {
-  var item_row = item + 5
+  var item_row = item + 5;
   SpreadsheetApp.getActiveSheet().getRange(item_row, itemColumn).setValue("");
-  SpreadsheetApp.getActiveSheet().getRange(item_row, elementColumn).setValue("");
-  SpreadsheetApp.getActiveSheet().getRange(item_row, spiritsColumn).setValue("");
+  SpreadsheetApp.getActiveSheet()
+    .getRange(item_row, elementColumn)
+    .setValue("");
+  SpreadsheetApp.getActiveSheet()
+    .getRange(item_row, spiritsColumn)
+    .setValue("");
 }
 
 function set_all_items(column, value) {
-  for (var i = 6; i < 12; i ++) {
+  for (var i = 6; i < 12; i++) {
     SpreadsheetApp.getActiveSheet().getRange(i, column).setValue(value);
   }
   SpreadsheetApp.getActiveSheet().getRange(4, column).setValue("");
@@ -120,10 +137,14 @@ function set_all_items(column, value) {
 
 function set_mundra_spirits() {
   var item;
-  for (var row = 6; row < 12; row ++) {
-    item = SpreadsheetApp.getActiveSheet().getRange(`C${row}`).getValue();
+  for (var row = 6; row < 12; row++) {
+    item = SpreadsheetApp.getActiveSheet()
+      .getRange("C" + row)
+      .getValue();
     if (MUNDRAS_ITEMS.has(item)) {
-      SpreadsheetApp.getActiveSheet().getRange(`F${row}`).setValue(MUNDRAS_SPIRIT);
+      SpreadsheetApp.getActiveSheet()
+        .getRange("F" + row)
+        .setValue(MUNDRAS_SPIRIT);
     }
   }
 }

@@ -2,16 +2,18 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-
 // Sheet Names
 const QUEST_SHEET = "Quest Sim";
 const HERO_1_SHEET = "Hero 1";
 const HERO_2_SHEET = "Hero 2";
 const HERO_3_SHEET = "Hero 3";
 const HERO_4_SHEET = "Hero 4";
-const HERO_SHEETS = new Set(
-  [HERO_1_SHEET, HERO_2_SHEET, HERO_3_SHEET, HERO_4_SHEET]
-);
+const HERO_SHEETS = new Set([
+  HERO_1_SHEET,
+  HERO_2_SHEET,
+  HERO_3_SHEET,
+  HERO_4_SHEET,
+]);
 
 // Champion Names
 const ARGON = "Argon";
@@ -46,9 +48,9 @@ const BLUE_TYPE = "Blue/Spellcaster Type";
 const SPELLCASTERS = new Set([DONOVAN, BISHOP, CLERIC, BLUE_TYPE]);
 
 // Mob Keywords
-const AGILE_MOB  = "Agile";
-const DIRE_MOB   = "Dire";
-const HUGE_MOB   = "Huge";
+const AGILE_MOB = "Agile";
+const DIRE_MOB = "Dire";
+const HUGE_MOB = "Huge";
 const LEGEND_MOB = "Legendary";
 
 // Quests
@@ -69,15 +71,55 @@ const MUNDRAS_BOW = "Mundra's Hornbow - T4";
 const MUNDRAS_ARMOR = "Mundra's Tabard - T5";
 const MUNDRAS_STAFF = "Mundra's Scepter - T7";
 const MUNDRAS_MACE = "Mundra's Masher - T10";
-const MUNDRAS_ITEMS = new Set(
-  [MUNDRAS_AMULET, MUNDRAS_BOW, MUNDRAS_AMULET, MUNDRAS_STAFF, MUNDRAS_MACE]
-);
+const MUNDRAS_ITEMS = new Set([
+  MUNDRAS_AMULET,
+  MUNDRAS_BOW,
+  MUNDRAS_AMULET,
+  MUNDRAS_STAFF,
+  MUNDRAS_MACE,
+]);
 
 // Import / Export
 const IMPORT_CELL_ORDER = new Array([
-  "B2", "B3", "C3", "B6", "B7", "B8", "B9", "B10", "B11", "C6",
-  "C7", "C8", "C9", "C10", "C11", "D6", "D7", "D8", "D9", "D10",
-  "D11", "E6", "E7", "E8", "E9", "E10", "E11", "F6", "F7", "F8",
-  "F9", "F10", "F11", "A14", "B14", "C14", "D14", "B16", "B24",
-  "B25", "B26",
+  "B2",
+  "B3",
+  "C3",
+  "B6",
+  "B7",
+  "B8",
+  "B9",
+  "B10",
+  "B11",
+  "C6",
+  "C7",
+  "C8",
+  "C9",
+  "C10",
+  "C11",
+  "D6",
+  "D7",
+  "D8",
+  "D9",
+  "D10",
+  "D11",
+  "E6",
+  "E7",
+  "E8",
+  "E9",
+  "E10",
+  "E11",
+  "F6",
+  "F7",
+  "F8",
+  "F9",
+  "F10",
+  "F11",
+  "A14",
+  "B14",
+  "C14",
+  "D14",
+  "B16",
+  "B24",
+  "B25",
+  "B26",
 ]);

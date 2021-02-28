@@ -2,7 +2,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-
 class Mob {
   constructor(
     zone,
@@ -13,7 +12,7 @@ class Mob {
     aoeChance,
     isBoss,
     miniBoss,
-    quest,
+    quest
   ) {
     this.aoeDmgBase = aoeDmgBase;
     this.aoeChance = aoeChance;
@@ -39,7 +38,7 @@ class Mob {
         break;
       case DIRE_MOB:
         this.hpMod = 1.5;
-        this.critChanceMod = 3.0
+        this.critChanceMod = 3.0;
         break;
       case HUGE_MOB:
         this.hpMod = 2.0;
@@ -58,11 +57,11 @@ class Mob {
   }
 
   get isBoss() {
-    return this._isBoss != NO
+    return this._isBoss != NO;
   }
 
   evasionCheck() {
-    return Math.random() < this.eva
+    return Math.random() < this.eva;
   }
 
   reset() {

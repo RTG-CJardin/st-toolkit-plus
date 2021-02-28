@@ -2,7 +2,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-
 class Hero {
   constructor(
     heroClass,
@@ -21,7 +20,7 @@ class Hero {
     mundra,
     atkMod,
     defMod,
-    quest,
+    quest
   ) {
     // Primary Characteristics
     this.heroClass = heroClass;
@@ -29,34 +28,34 @@ class Hero {
     this.quest = quest;
 
     // Hero Stats
-    this._hp    = hpMax;
+    this._hp = hpMax;
     this.hpMax = hpMax;
 
     this.atkMod = 1.0 + atkMod / 100.0;
-    this.atk    = atk / this.atkMod;
+    this.atk = atk / this.atkMod;
     this.defMod = 1.0 + defMod / 100.0;
-    this.def    = def / this.defMod;
-    this.eva    = eva / 100.0;
+    this.def = def / this.defMod;
+    this.eva = eva / 100.0;
 
     this.critChance = critChance / 100.0;
-    this.critMult   = critMult;
+    this.critMult = critMult;
 
     this.threat = threat;
 
     // Spirits
     this.armadillo = armadillo;
-    this.dinosaur  = dinosaur;
-    this.lizard    = lizard;
-    this.shark     = shark;
-    this.mundra   = mundra;
+    this.dinosaur = dinosaur;
+    this.lizard = lizard;
+    this.shark = shark;
+    this.mundra = mundra;
 
     // Flags
     this.guaranteedCrit = false;
-    this.takenDamage    = false;
+    this.takenDamage = false;
 
     // Quest Stats
     this.surviveChance = 0.0;
-    this.targetChance  = 0.0;
+    this.targetChance = 0.0;
 
     this.totalSimDmg = 0.0;
     this.dmgDealtAvg = 0.0;
@@ -91,20 +90,21 @@ class Hero {
     var mob = this.quest.mob;
     if (this.def <= mob.defCap / 6.0) {
       return Math.round(
-        1.5 * mob.dmg + (this.def / (mob.defCap / 6.0))
-        * (0.5 * mob.dmg - 1.5 * mob.dmg)
+        1.5 * mob.dmg +
+          (this.def / (mob.defCap / 6.0)) * (0.5 * mob.dmg - 1.5 * mob.dmg)
       );
     } else if (this.def <= mob.defCap / 3.0) {
       return Math.round(
-        0.5 * mob.dmg + ((this.def - mob.defCap / 6.0)
-        / (mob.defCap / 3.0 - mob.defCap / 6.0))
-        * (0.3 * mob.dmg - 0.5 * mob.dmg)
+        0.5 * mob.dmg +
+          ((this.def - mob.defCap / 6.0) /
+            (mob.defCap / 3.0 - mob.defCap / 6.0)) *
+            (0.3 * mob.dmg - 0.5 * mob.dmg)
       );
     } else {
       return Math.round(
-        0.3 * mob.dmg + ((this.def - mob.defCap / 3.0)
-        / (mob.defCap - mob.defCap / 3.0))
-        * (0.25 * mob.dmg - 0.3 * mob.dmg)
+        0.3 * mob.dmg +
+          ((this.def - mob.defCap / 3.0) / (mob.defCap - mob.defCap / 3.0)) *
+            (0.25 * mob.dmg - 0.3 * mob.dmg)
       );
     }
   }
@@ -114,7 +114,7 @@ class Hero {
 
   // Evasion
   get evasionChance() {
-    var rawEvasion = this.eva + (this.berserkerStage * 0.1) + this.ninjaEva;
+    var rawEvasion = this.eva + this.berserkerStage * 0.1 + this.ninjaEva;
     return Math.min(rawEvasion, 0.75);
   }
 
@@ -123,7 +123,7 @@ class Hero {
     if (!this.quest.mob.isBoss) {
       this.mundra = 0;
     }
-    this.def *= (this.defMod + 0.2 + this.mundra);
+    this.def *= this.defMod + 0.2 + this.mundra;
   }
 
   // Hero Classes
@@ -164,20 +164,17 @@ class Hero {
   get berserkerStage() {
     if (!this.isBerserker || this.hp >= 0.75 * this.hpMax) {
       return 0;
-    }
-    else if (this.hp >= 0.5 * this.hpMax) {
+    } else if (this.hp >= 0.5 * this.hpMax) {
       return 1;
-    }
-    else if (this.hp >= 0.25 * this.hpMax) {
+    } else if (this.hp >= 0.25 * this.hpMax) {
       return 2;
-    }
-    else if (this.isAlive) {
+    } else if (this.isAlive) {
       return 3;
     }
   }
   get ninjaEva() {
     if (this.isNinja || !this.takenDamage) {
-      return (this.tier >= 3) ? 0.2 : 0.15;
+      return this.tier >= 3 ? 0.2 : 0.15;
     } else {
       return 0;
     }
@@ -191,21 +188,22 @@ class Hero {
   }
 
   criticalHitCheck() {
-    var totalCritChance = this.critChance + this.ninjaMod + this.quest.champion.rudoMod;
-    return (this.guaranteedCrit || (Math.random() < totalCritChance));
+    var totalCritChance =
+      this.critChance + this.ninjaMod + this.quest.champion.rudoMod;
+    return this.guaranteedCrit || Math.random() < totalCritChance;
   }
 
   attack(target) {
     var damage;
     if (!target.evasionCheck()) {
       // Mob doesn't evade the attack
-      damage = this.atk * (
-        this.atkMod
-        + (0.2 * this.mundra)
-        + (this.quest.sharkActive * 0.2 * this.shark)
-        + (this.quest.dinosaurActive * this.dinosaur * 0.25)
-        + (0.1 * this.berserkerLevel * this.berserkerStage)
-      );
+      damage =
+        this.atk *
+        (this.atkMod +
+          0.2 * this.mundra +
+          this.quest.sharkActive * 0.2 * this.shark +
+          this.quest.dinosaurActive * this.dinosaur * 0.25 +
+          0.1 * this.berserkerLevel * this.berserkerStage);
       if (this.criticalHitCheck()) {
         damage *= this.critMult;
       }
@@ -232,7 +230,7 @@ class Hero {
     this.totalSimDmg = 0;
     this.takenDamage = false;
     this.guaranteedCrit = false;
-    this.surviveChance = this.isCleric ? 1.2 : this.armadillo * 15 / 100.0;
+    this.surviveChance = this.isCleric ? 1.2 : (this.armadillo * 15) / 100.0;
 
     if (this.isSamurai) {
       this.guaranteedCrit = true;

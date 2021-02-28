@@ -2,7 +2,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-
 class Champion {
   constructor(hero, heroes, quest) {
     this.name = hero.name;
@@ -25,16 +24,16 @@ class Champion {
         } else {
           this.atkMod = (0.02 + 0.02 * this.tier) * this.spellCount;
         }
-        for (var i = 0; i < heroes.length; i ++) {
-          heroes[i].hpMax *= (1.0 + (0.03 + 0.01 * this.tier) * this.fightCount);
+        for (var i = 0; i < heroes.length; i++) {
+          heroes[i].hpMax *= 1.0 + (0.03 + 0.01 * this.tier) * this.fightCount;
           heroes[i].critChance += (0.01 + 0.01 * this.tier) * this.rogueCount;
           heroes[i].evasion += (0.01 + 0.01 * this.tier) * this.rogueCount;
         }
         break;
 
       case LILU:
-        for (var i = 0; i < heroes.length; i ++) {
-          heroes[i].hpMax *= (1.05 + 0.05 * this.tier);
+        for (var i = 0; i < heroes.length; i++) {
+          heroes[i].hpMax *= 1.05 + 0.05 * this.tier;
         }
         if (this.tier == 1) {
           this.liluHeal = 3;
@@ -49,8 +48,8 @@ class Champion {
 
       case POLONIA:
         this.defMod = 0.05 + 0.05 * this.tier;
-        for (var i = 0; i < heroes.length; i ++) {
-          heroes[i].evasion += (this.tier < 3) ? 0.05 : 0.1;
+        for (var i = 0; i < heroes.length; i++) {
+          heroes[i].evasion += this.tier < 3 ? 0.05 : 0.1;
         }
         break;
 
@@ -59,7 +58,7 @@ class Champion {
         break;
 
       case YAMI:
-        for (var i = 0; i < heroes.length; i ++) {
+        for (var i = 0; i < heroes.length; i++) {
           heroes[i].critChance += 0.05 * this.tier;
           heroes[i].evasion += 0.05 * this.tier;
         }
@@ -73,10 +72,10 @@ class Champion {
 
   get rudoMod() {
     if (
-      !this.isRudo
-      || (this.quest.round > 1 && this.tier < 3)
-      || (this.quest.round > 2 && this.tier < 4)
-      || this.quest.round > 3
+      !this.isRudo ||
+      (this.quest.round > 1 && this.tier < 3) ||
+      (this.quest.round > 2 && this.tier < 4) ||
+      this.quest.round > 3
     ) {
       return 0;
     } else if (this.tier == 1) {
@@ -94,14 +93,14 @@ class Champion {
     this.rogueCount = 0;
     this.spellCount = 0;
 
-    for (var i = 0; i < heroes.length; i ++) {
+    for (var i = 0; i < heroes.length; i++) {
       hero = heroes[i];
       if (hero.isFighter) {
-        this.fightCount ++;
+        this.fightCount++;
       } else if (hero.isRogue) {
-        this.rogueCount ++;
+        this.rogueCount++;
       } else if (hero.isSpellcaster) {
-        this.spellCount ++;
+        this.spellCount++;
       }
     }
   }

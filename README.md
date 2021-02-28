@@ -1,8 +1,8 @@
 # Shop Titans Toolkit -- Upgraded
+
 ## st-toolkit-upgraded
 
-This is the mono-repo for the fanmade Shop Titans community toolkit 
-
+This is the mono-repo for the fanmade Shop Titans community toolkit
 
 Contained within are a collection of tools built and managed by fans for use by the community of Shop Titans players for free. Originally, these tools were all built in Google Sheets and were used exclusively therein. This project is designed to extract the tools from that trap and build a single responsive webapp which can house all tools and run smoothly, and quickly on all devices.
 

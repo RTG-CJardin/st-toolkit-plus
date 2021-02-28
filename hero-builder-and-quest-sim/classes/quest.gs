@@ -2,7 +2,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-
 class Quest {
   constructor() {
     this.initHeroes();
@@ -15,7 +14,7 @@ class Quest {
     this.updateTarget = true;
     this.continueFight = true;
 
-    this.winCount  = 0;
+    this.winCount = 0;
     this.roundsAvg = 0;
     this.roundsMax = 0;
     this.roundsMin = Infinity;
@@ -34,33 +33,33 @@ class Quest {
 
   get heroesAlive() {
     var aliveCount = 0;
-    for (var i = 0; i < this.heroes.length; i ++) {
+    for (var i = 0; i < this.heroes.length; i++) {
       if (this.heroes[i].isAlive) {
-        aliveCount ++;
+        aliveCount++;
       }
     }
     return aliveCount;
   }
 
   initHeroes() {
-    var classRange      = SpreadsheetApp.getActiveSheet().getRange("B3:B7");
-    var tierRange       = SpreadsheetApp.getActiveSheet().getRange("C3:C7");
-    var hpMaxRange      = SpreadsheetApp.getActiveSheet().getRange("D3:D7");
-    var threatRange     = SpreadsheetApp.getActiveSheet().getRange("G3:G7");
-    var atkRange        = SpreadsheetApp.getActiveSheet().getRange("E3:E7");
-    var atkModRange     = SpreadsheetApp.getActiveSheet().getRange("P3:P7");
-    var defRange        = SpreadsheetApp.getActiveSheet().getRange("F3:F7");
-    var defModRange     = SpreadsheetApp.getActiveSheet().getRange("Q3:Q7");
-    var evaRange        = SpreadsheetApp.getActiveSheet().getRange("J3:J7");
+    var classRange = SpreadsheetApp.getActiveSheet().getRange("B3:B7");
+    var tierRange = SpreadsheetApp.getActiveSheet().getRange("C3:C7");
+    var hpMaxRange = SpreadsheetApp.getActiveSheet().getRange("D3:D7");
+    var threatRange = SpreadsheetApp.getActiveSheet().getRange("G3:G7");
+    var atkRange = SpreadsheetApp.getActiveSheet().getRange("E3:E7");
+    var atkModRange = SpreadsheetApp.getActiveSheet().getRange("P3:P7");
+    var defRange = SpreadsheetApp.getActiveSheet().getRange("F3:F7");
+    var defModRange = SpreadsheetApp.getActiveSheet().getRange("Q3:Q7");
+    var evaRange = SpreadsheetApp.getActiveSheet().getRange("J3:J7");
     var critChanceRange = SpreadsheetApp.getActiveSheet().getRange("H3:H7");
-    var critMultRange   = SpreadsheetApp.getActiveSheet().getRange("I3:I7");
-    var armadilloRange  = SpreadsheetApp.getActiveSheet().getRange("K3:K7");
-    var dinosaurRange   = SpreadsheetApp.getActiveSheet().getRange("N3:N7");
-    var lizardRange     = SpreadsheetApp.getActiveSheet().getRange("L3:L7");
-    var mundraRange     = SpreadsheetApp.getActiveSheet().getRange("O3:O7");
-    var sharkRange      = SpreadsheetApp.getActiveSheet().getRange("M3:M7");
+    var critMultRange = SpreadsheetApp.getActiveSheet().getRange("I3:I7");
+    var armadilloRange = SpreadsheetApp.getActiveSheet().getRange("K3:K7");
+    var dinosaurRange = SpreadsheetApp.getActiveSheet().getRange("N3:N7");
+    var lizardRange = SpreadsheetApp.getActiveSheet().getRange("L3:L7");
+    var mundraRange = SpreadsheetApp.getActiveSheet().getRange("O3:O7");
+    var sharkRange = SpreadsheetApp.getActiveSheet().getRange("M3:M7");
     this.heroes = new Array();
-    for (var heroNum = 1; heroNum <= 5; heroNum ++) {
+    for (var heroNum = 1; heroNum <= 5; heroNum++) {
       this.heroes.push(
         new Hero(
           classRange.getCell(heroNum, 1).getValue(),
@@ -79,7 +78,7 @@ class Quest {
           mundraRange.getCell(heroNum, 1).getValue(),
           atkModRange.getCell(heroNum, 1).getValue(),
           defModRange.getCell(heroNum, 1).getValue(),
-          this,
+          this
         )
       );
     }
@@ -92,14 +91,18 @@ class Quest {
   }
 
   initMob() {
-    var mobZone       = SpreadsheetApp.getActiveSheet().getRange(11, 1).getValue();
-    var mobHPMax      = SpreadsheetApp.getActiveSheet().getRange(11, 2).getValue();
-    var mobDmg        = SpreadsheetApp.getActiveSheet().getRange(11, 3).getValue();
-    var mobCap        = SpreadsheetApp.getActiveSheet().getRange(11, 4).getValue();
-    var mobAoeDmgBase = SpreadsheetApp.getActiveSheet().getRange(11, 5).getValue();
-    var mobAoeChance  = SpreadsheetApp.getActiveSheet().getRange(11, 6).getValue();
-    var mobIsBoss     = SpreadsheetApp.getActiveSheet().getRange(11, 8).getValue();
-    var mobMiniBoss   = SpreadsheetApp.getActiveSheet().getRange(9, 2).getValue();
+    var mobZone = SpreadsheetApp.getActiveSheet().getRange(11, 1).getValue();
+    var mobHPMax = SpreadsheetApp.getActiveSheet().getRange(11, 2).getValue();
+    var mobDmg = SpreadsheetApp.getActiveSheet().getRange(11, 3).getValue();
+    var mobCap = SpreadsheetApp.getActiveSheet().getRange(11, 4).getValue();
+    var mobAoeDmgBase = SpreadsheetApp.getActiveSheet()
+      .getRange(11, 5)
+      .getValue();
+    var mobAoeChance = SpreadsheetApp.getActiveSheet()
+      .getRange(11, 6)
+      .getValue();
+    var mobIsBoss = SpreadsheetApp.getActiveSheet().getRange(11, 8).getValue();
+    var mobMiniBoss = SpreadsheetApp.getActiveSheet().getRange(9, 2).getValue();
     this.mob = new Mob(
       mobZone,
       mobHPMax,
@@ -109,17 +112,17 @@ class Quest {
       mobAoeChance,
       mobIsBoss,
       mobMiniBoss,
-      this,
+      this
     );
     this.mob.barrensCheck(this.heroes);
-    for (var i = 0; i < this.heroes.length; i ++) {
+    for (var i = 0; i < this.heroes.length; i++) {
       this.heroes[i].updateMundraDef();
     }
   }
 
   initChampion() {
-    for (var i = 0; i < this.heroes.length; i ++) {
-      if (this.heroes[i].isChampion){
+    for (var i = 0; i < this.heroes.length; i++) {
+      if (this.heroes[i].isChampion) {
         this.champion = new Champion(this.heroes[i], this.heroes, this);
         break;
       }
@@ -137,7 +140,7 @@ class Quest {
       case BOOST_SUPER:
         this.boosterAtkMod = 0.4;
         this.boosterDefMod = 0.4;
-        for (var i = 0; i < this.heroes.length; i ++) {
+        for (var i = 0; i < this.heroes.length; i++) {
           this.heroes[i].critChance += 0.1;
         }
         break;
@@ -145,9 +148,9 @@ class Quest {
       case BOOST_MEGA:
         this.boosterAtkMod = 0.8;
         this.boosterDefMod = 0.8;
-        for (var i = 0; i < this.heroes.length; i ++) {
+        for (var i = 0; i < this.heroes.length; i++) {
           this.heroes[i].critChance += 0.25;
-          this.heroes[i].critMult   += 0.5;
+          this.heroes[i].critMult += 0.5;
         }
 
       default:
@@ -155,9 +158,9 @@ class Quest {
         this.boosterDefMod = 0.0;
     }
 
-    for (var i = 0; i < this.heroes.length; i ++) {
-      this.heroes[i].atk *= (1.0 + this.champion.atkMod + this.boosterAtkMod);
-      this.heroes[i].def *= (1.0 + this.champion.defMod + this.boosterDefMod);
+    for (var i = 0; i < this.heroes.length; i++) {
+      this.heroes[i].atk *= 1.0 + this.champion.atkMod + this.boosterAtkMod;
+      this.heroes[i].def *= 1.0 + this.champion.defMod + this.boosterDefMod;
     }
   }
 
@@ -165,7 +168,7 @@ class Quest {
     var hero;
     this.mob.reset();
 
-    for (var simNumber = 0; simNumber < SIM_COUNT; simNumber ++) {
+    for (var simNumber = 0; simNumber < SIM_COUNT; simNumber++) {
       this.resetHeroes();
       this.mob.reset();
 
@@ -175,7 +178,7 @@ class Quest {
 
       // Start Quest
       while (this.continueFight) {
-        this.round ++;
+        this.round++;
 
         this.setTargetingChances();
         this.determineTargets();
@@ -183,14 +186,14 @@ class Quest {
         this.mobAttack();
         this.heroesAttack();
 
-        if (this.mob.hp <= 0)  {
+        if (this.mob.hp <= 0) {
           this.continueFight = false;
-          this.winCount ++;
+          this.winCount++;
 
-          for (var i = 0; i < this.heroes.length; i ++) {
-          hero = this.heroes[i];
+          for (var i = 0; i < this.heroes.length; i++) {
+            hero = this.heroes[i];
             if (hero.isAlive) {
-              hero.survivedCount ++;
+              hero.survivedCount++;
             }
             hero.updateHpStats();
           }
@@ -205,19 +208,21 @@ class Quest {
 
         if (!this.continueFight) {
           // End the fight
-          for (var i = 0; i < this.heroes.length; i ++) {
+          for (var i = 0; i < this.heroes.length; i++) {
             this.heroes[i].updateDmgStats();
           }
         } else {
-          for (var i = 0; i < this.heroes.length; i ++) {
-          hero = this.heroes[i];
+          for (var i = 0; i < this.heroes.length; i++) {
+            hero = this.heroes[i];
             if (hero.isAlive) {
               hero.hp = Math.min(hero.hp + hero.lizard * 3, hero.hpMax);
               if (hero.heroClass == CLERIC) {
                 hero.hp = Math.min(hero.hp + hero.tier * 5 - 5, hero.hpMax);
-              }
-              else if (hero.heroClass == BISHOP) {
-                hero.hp = Math.min(hero.hp + 5 * Math.pow(2, hero.tier - 1), hero.hpMax);
+              } else if (hero.heroClass == BISHOP) {
+                hero.hp = Math.min(
+                  hero.hp + 5 * Math.pow(2, hero.tier - 1),
+                  hero.hpMax
+                );
               }
               if (this.champion.name == LILU) {
                 hero.hp += this.champion.liluHeal;
@@ -233,23 +238,22 @@ class Quest {
     if (this.updateTarget) {
       // Update the targeting chances after any of the heroes die
       var totalTargetingChance = 0.0;
-      for (var i = 0; i < this.heroes.length; i ++) {
+      for (var i = 0; i < this.heroes.length; i++) {
         // Clear all targeting chances
         this.heroes[i].targetChance = 0;
       }
       // Compute hero chance to get targeted
-      for (var i = 0; i < this.heroes.length; i ++) {
+      for (var i = 0; i < this.heroes.length; i++) {
         if (this.heroes[i].isAlive) {
-          for (var j = i; j < this.heroes.length; j ++) {
+          for (var j = i; j < this.heroes.length; j++) {
             this.heroes[j].targetChance += this.heroes[i].threat;
           }
           totalTargetingChance += this.heroes[i].threat;
         }
       }
-      for (var i = 0; i < this.heroes.length; i ++) {
-        this.heroes[i].targetChance = (
-          this.heroes[i].targetChance / totalTargetingChance
-        );
+      for (var i = 0; i < this.heroes.length; i++) {
+        this.heroes[i].targetChance =
+          this.heroes[i].targetChance / totalTargetingChance;
       }
       this.updateTarget = false;
     }
@@ -259,15 +263,14 @@ class Quest {
     if (Math.random() < this.mob.aoeChance && this.heroesAlive > 1) {
       // AoE Attack
       this.mob.atkTargets = this.heroes;
-    }
-    else {
+    } else {
       // Individual Attack
       this.targetRoll = Math.random();
       this.mob.atkTargets = [this.heroes[0]];
-      for (var i = this.heroes.length - 1; i <= 0; i --) {
+      for (var i = this.heroes.length - 1; i <= 0; i--) {
         if (
-          this.heroes[i].isAlive
-          && this.targetRoll < this.heroes[i].targetChance
+          this.heroes[i].isAlive &&
+          this.targetRoll < this.heroes[i].targetChance
         ) {
           this.mob.atkTargets = [this.heroes[i]];
         }
@@ -278,7 +281,7 @@ class Quest {
   mobAttack() {
     var roundDmg, hero;
 
-    for (var i = 0; i < this.mob.atkTargets.length; i ++) {
+    for (var i = 0; i < this.mob.atkTargets.length; i++) {
       hero = this.mob.atkTargets[i];
       if (hero.isDead) {
         continue;
@@ -286,7 +289,7 @@ class Quest {
 
       if (this.mob.atkTargets.length > 1) {
         // AoE Attack
-        roundDmg = Math.ceil(hero.dmgTaken * this.mob.aoeDmg)
+        roundDmg = Math.ceil(hero.dmgTaken * this.mob.aoeDmg);
       } else if (Math.random() < this.mob.critChance * this.mob.critChanceMod) {
         // Individual Attack
         roundDmg = hero.dmgTaken;
@@ -317,36 +320,52 @@ class Quest {
   }
 
   heroesAttack() {
-    for (var i = 0; i < this.heroes.length; i ++) {
+    for (var i = 0; i < this.heroes.length; i++) {
       if (this.heroes[i].isAlive) {
-        this.heroes[i].attack(this.mob)
+        this.heroes[i].attack(this.mob);
       }
     }
   }
 
   resetHeroes() {
-    for (var i = 0; i < this.heroes.length; i ++) {
+    for (var i = 0; i < this.heroes.length; i++) {
       this.heroes[i].reset();
     }
   }
 
   populateSimStats() {
     var hero;
-    SpreadsheetApp.getActiveSheet().getRange(25, 1).setValue(this.winCount * 100 / SIM_COUNT);
+    SpreadsheetApp.getActiveSheet()
+      .getRange(25, 1)
+      .setValue((this.winCount * 100) / SIM_COUNT);
     SpreadsheetApp.getActiveSheet().getRange(25, 2).setValue(this.roundsMin);
-    SpreadsheetApp.getActiveSheet().getRange(25, 3).setValue(this.roundsAvg / SIM_COUNT);
+    SpreadsheetApp.getActiveSheet()
+      .getRange(25, 3)
+      .setValue(this.roundsAvg / SIM_COUNT);
     SpreadsheetApp.getActiveSheet().getRange(25, 4).setValue(this.roundsMax);
 
     var col = 2;
-    for (var i = 0; i < this.heroes.length; i ++) {
+    for (var i = 0; i < this.heroes.length; i++) {
       hero = this.heroes[i];
-      SpreadsheetApp.getActiveSheet().getRange(27, col).setValue(hero.survivedCount * 100 / SIM_COUNT);
-      SpreadsheetApp.getActiveSheet().getRange(28, col).setValue(hero.hpRemainAvg / SIM_COUNT);
-      SpreadsheetApp.getActiveSheet().getRange(29, col).setValue(hero.hpRemainMax);
-      SpreadsheetApp.getActiveSheet().getRange(30, col).setValue(hero.dmgDealtMax);
-      SpreadsheetApp.getActiveSheet().getRange(31, col).setValue(hero.dmgDealtAvg / SIM_COUNT);
-      SpreadsheetApp.getActiveSheet().getRange(32, col).setValue(hero.dmgDealtMin);
-      col ++;
+      SpreadsheetApp.getActiveSheet()
+        .getRange(27, col)
+        .setValue((hero.survivedCount * 100) / SIM_COUNT);
+      SpreadsheetApp.getActiveSheet()
+        .getRange(28, col)
+        .setValue(hero.hpRemainAvg / SIM_COUNT);
+      SpreadsheetApp.getActiveSheet()
+        .getRange(29, col)
+        .setValue(hero.hpRemainMax);
+      SpreadsheetApp.getActiveSheet()
+        .getRange(30, col)
+        .setValue(hero.dmgDealtMax);
+      SpreadsheetApp.getActiveSheet()
+        .getRange(31, col)
+        .setValue(hero.dmgDealtAvg / SIM_COUNT);
+      SpreadsheetApp.getActiveSheet()
+        .getRange(32, col)
+        .setValue(hero.dmgDealtMin);
+      col++;
     }
   }
 }
