@@ -1,0 +1,108 @@
+// Nav.module.scss
+
+.Nav {
+  height: 5.75rem;
+  margin: 0 auto;
+  padding: 0;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  z-index: 100;
+  position: relative;
+
+  background: var(--bgColor-primary);
+  border-bottom: 2px solid var(--borderColor-tertiary);
+  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.3);
+
+  &Trigger {
+    cursor: pointer;
+
+    margin-left: auto;
+    padding: 1.75em 2.5em;
+
+    background-image: url(../public/images/menu.png);
+    background-size: 40px;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &:focus,
+    &:hover {
+      background-color: var(--tabHoverBackground);
+    }
+  }
+
+  &Menu {
+    height: 100vh;
+    width: 100%;
+    max-width: 350px;
+
+    display: flex;
+    justify-content: left;
+
+    position: absolute;
+    top: 0;
+    right: -375px;
+    z-index: 100;
+
+    background: var(--gradient-primary);
+    border-left: 3px solid var(--borderColor-primary);
+    box-shadow: 0 -5px 0 3px var(--borderColor-secondary);
+
+
+    &Open {
+      right: 0;
+      transition: 300ms;
+    }
+
+    &Header {
+      height: 6.25rem;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+
+      display: flex;
+      position: relative;
+
+      background: var(--bgColor-quaternary);
+      border-bottom: 2px solid var(--borderColor-tertiary);
+      box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.3);
+
+      & h1 {
+        margin-right: auto;
+
+        font-size: 3rem;
+        line-height: 2em;
+
+        text-shadow: var(--textShadow-primary);
+      }
+
+      & .NavTrigger {
+        margin: 0;
+
+        &:hover {
+          background-color: unset;
+        }
+      }
+    }
+  }
+
+  &Close {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 0.6em;
+    right: 1em;
+    width: 35px;
+    height: 35px;
+    background: no-repeat url(../public/images/action_close.png) center / 80%,
+      linear-gradient(to top, #ff3b12 0, #ff542b 100%);
+    border: 3px solid var(--redBorder);
+    border-radius: 50%;
+    box-shadow: 0 4px 0 0 var(--redDropshadow),
+      0 0 0 3px var(--borderColor-secondary),
+      0 4px 0 3px var(--borderColor-secondary);
+  }
+}

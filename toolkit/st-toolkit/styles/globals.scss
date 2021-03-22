@@ -1,46 +1,322 @@
 // globals.scss
 
 @font-face {
-  font-family: 'Curse Casual';
-  src: url("../public/Curse Casual.woff2") format("woff2")
+  font-family: "Curse\ Casual";
+  src: url("../public/fonts/Curse\ Casual.woff2") format("woff2"),
+    url("../public/fonts/Curse\ Casual.woff") format("woff"),
+    url("../public/fonts/Curse\ Casual.ttf") format("ttf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
-$fontPrimary: 'Curse Casual', 'Roboto Condensed', 'Open Sans', sans-serif;
-$fontSystem: '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto',
-    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-$primaryBackground: #271a23;
-$secondaryBackground: #3d2937;
-$tertiaryBackground: #55384c;
-$quaternaryBackground: #442337;
-$headerBackground: #35212f;
-$primaryDropshadowColor: #44233b;
-$primaryBorder: #a74c7d;
-$secondaryBorder: #1f161f;
-$tertiaryBorder: #714059;
-$textWhite: #fff;
-$textBlack: #000;
-$textGolden: #ffcc00;
-$textBold: #eed0e2;
-$textPrimary: #fff3d6;
-$textSecondary: #b8729b;
-$textTertiary: #bd89a8;
-$textQuaternary: #c9579b;
+:root {
+  --color-primary: #0984d2;
+  --color-primary-light: #6fadff;
+  --color-secondary: #212121;
+  --color-lightGrey: whitesmoke;
+  --color-midGrey: #cacaca;
+  --color-darkGrey: #272727;
+  --color-danger: #ff3d3d;
 
-html,
+  --ff-primary: "Curse Casual", "Roboto Condensed", "Open Sans", sans-serif;
+  --ff-system: "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+
+  --bgColor-primary: #271a23;
+  --bgColor-secondary: #3d2937;
+  --bgColor-tertiary: #55384c;
+  --bgColor-quaternary: #442337;
+  --bgColor-header: #35212f;
+
+  --gradient-primary: linear-gradient(to top, #502f40 0, #612f48 100%);
+  /* Content card top/bottom border */
+  --gradient-secondary: linear-gradient(
+    to right,
+    transparent 0,
+    #714059 25%,
+    #714059 75%,
+    transparent 100%
+  );
+  /* Content body top/bottom border */
+  --gradient-tertiary: linear-gradient(
+    to right,
+    transparent 0,
+    #8c597b 25%,
+    #8c597b 75%,
+    transparent 100%
+  );
+
+  /* Red action button */
+  --redGradient: linear-gradient(to top, #ff3b12 0, #ff542b 100%);
+  --redBorder: #fd6137;
+  --redDropshadow: #5e2413;
+
+  --tabGradient: linear-gradient(to top, #ffb703, #f7cf3e);
+  --tabHoverBackground: #1e151a;
+  --tabBorderEffect: inset 0 -4px 0 0 #ffd800, 0 0 5px 0 #f8cc37;
+
+  --primaryDropshadow: #44233b;
+  --filterDropshadow: drop-shadow(-1px -1px 0 rgba(0, 0, 0, 0.5))
+    drop-shadow(1px 1px 0 rgba(0, 0, 0, 0.5))
+    drop-shadow(1px -1px 0 rgba(0, 0, 0, 0.5))
+    drop-shadow(-1px 1px 0 rgba(0, 0, 0, 0.5));
+  --filterDropshadow2: drop-shadow(-1px -1px 0 rgba(0, 0, 0, 1))
+    drop-shadow(1px 1px 0 rgba(0, 0, 0, 1))
+    drop-shadow(1px -1px 0 rgba(0, 0, 0, 1))
+    drop-shadow(-1px 1px 0 rgba(0, 0, 0, 1));
+
+  --borderColor-primary: #a74c7d;
+  --borderColor-secondary: #1f161f;
+  --borderColor-tertiary: #714059;
+
+  --borderRadius-10: 10px;
+  --borderRadius-15: 15px;
+  --borderRadius-25: 25px;
+
+  --textColor-white: #fff;
+  --textColor-black: #000;
+  --textColor-golden: #ffcc00;
+  --textColor-bold: #eed0e2;
+  --textColor-primary: #fff3d6;
+  --textColor-secondary: #b8729b;
+  --textColor-tertiary: #bd89a8;
+  --textColor-quaternary: #c9579b;
+
+  --textShadow-primary: 1px 1px 0 #1f161f, -1px 1px 0 #1f161f,
+    1px -1px 0 #1f161f, -1px -1px 0 #1f161f, 0px 1px 0 #1f161f,
+    0px -1px 0 #1f161f, -1px 0px 0 #1f161f, 1px 0px 0 #1f161f, 2px 2px 0 #1f161f,
+    -2px 2px 0 #1f161f, 2px -2px 0 #1f161f, -2px -2px 0 #1f161f,
+    0px 2px 0 #1f161f, 0px -2px 0 #1f161f, -2px 0px 0 #1f161f, 2px 0px 0 #1f161f,
+    1px 2px 0 #1f161f, -1px 2px 0 #1f161f, 1px -2px 0 #1f161f,
+    -1px -2px 0 #1f161f, 2px 1px 0 #1f161f, -2px 1px 0 #1f161f,
+    2px -1px 0 #1f161f, -2px -1px 0 #1f161f, 0 3px 0 #363636, -1px 3px 0 #363636,
+    1px 3px 0 #363636;
+  --textShadow-secondary: 1px 1px 0 rgba(31, 22, 31, 0.2),
+    -1px 1px 0 rgba(31, 22, 31, 0.2), 1px -1px 0 rgba(31, 22, 31, 0.2),
+    -1px -1px 0 rgba(31, 22, 31, 0.2), 0px 1px 0 rgba(31, 22, 31, 0.2),
+    0px -1px 0 rgba(31, 22, 31, 0.2), -1px 0px 0 rgba(31, 22, 31, 0.2),
+    1px 0px 0 rgba(31, 22, 31, 0.2), 2px 2px 0 rgba(31, 22, 31, 0.2),
+    -2px 2px 0 rgba(31, 22, 31, 0.2), 2px -2px 0 rgba(31, 22, 31, 0.2),
+    -2px -2px 0 rgba(31, 22, 31, 0.2), 0px 2px 0 rgba(31, 22, 31, 0.2),
+    0px -2px 0 rgba(31, 22, 31, 0.2), -2px 0px 0 rgba(31, 22, 31, 0.2),
+    2px 0px 0 rgba(31, 22, 31, 0.2), 1px 2px 0 rgba(31, 22, 31, 0.2),
+    -1px 2px 0 rgba(31, 22, 31, 0.2), 1px -2px 0 rgba(31, 22, 31, 0.2),
+    -1px -2px 0 rgba(31, 22, 31, 0.2), 2px 1px 0 rgba(31, 22, 31, 0.2),
+    -2px 1px 0 rgba(31, 22, 31, 0.2), 2px -1px 0 rgba(31, 22, 31, 0.2),
+    -2px -1px 0 rgba(31, 22, 31, 0.2), 0 3px 0 rgba(54, 54, 54, 0.25),
+    -1px 3px 0 rgba(54, 54, 54, 0.25), 1px 3px 0 rgba(54, 54, 54, 0.25);
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+  min-height: 100%;
+  background: var(--bgColor-primary);
+  scrollbar-color: #5c2043 #271a23;
+  scrollbar-width: thin;
+}
+
 body {
-  padding: 0;
+  font-family: var(--ff-primary);
+  min-height: 100%;
+  position: relative;
+  background: var(--bgColor-secondary);
+  color: var(--textColor-white);
+  font-size: 1.6em;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.6;
   margin: 0;
-  font: 100% $fontPrimary;
-  color: $textPrimary;
-  background-color: $primaryBackground;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+  color: var(--color-primary);
 }
 
-* {
-  box-sizing: border-box;
+strong {
+  font-weight: 600;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  margin-bottom: 0.5em;
+  font-weight: normal;
+}
+
+blockquote {
+  margin-left: 0;
+  padding-left: 1em;
+  line-height: 1.1;
+  font-size: 1em;
+  font-style: italic;
+  border-left: 2px solid var(--color-primary);
+}
+button,
+.button {
+  padding: 10px 25px;
+  background: var(--gradient-primary);
+  color: var(--textColor-white);
+  letter-spacing: 0.5px;
+  border: 2px solid var(--borderColor-primary);
+  border-radius: var(--borderRadius-10);
+  box-shadow: 0 5px 0 0 var(--primaryDropshadow),
+    0 0 0 3px var(--borderColor-secondary),
+    0 5px 0 3px var(--borderColor-secondary);
+  text-shadow: 0 2px 0 black;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+}
+button:hover,
+button:focus,
+.button:hover,
+.button:focus {
+  box-shadow: 0 5px 0 0 var(--primaryDropshadow),
+    0 0 0 3px var(--borderColor-secondary),
+    0 5px 0 3px var(--borderColor-secondary), 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* Utility Classes */
+.light {
+  background-color: var(--bgColor-secondary);
+}
+.white {
+  background-color: white;
+}
+.dark {
+  background-color: var(--color-primary);
+  color: white;
+}
+.dark h1,
+.dark h2,
+.dark h3,
+.dark h4,
+.dark h5,
+.dark h6 {
+  color: white;
+}
+
+.relative {
+  position: relative;
+}
+.absolute {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.taCenter {
+  text-align: center;
+}
+.taLeft {
+  text-align: left;
+}
+.taRight {
+  text-align: right;
+}
+
+/* Layout */
+
+.section {
+  width: 100%;
+  padding: 7.5rem 0;
+}
+.section.thick {
+  padding: 10rem 0;
+}
+.section.thin {
+  padding: 3.5rem 0;
+}
+.section.noPadding {
+  padding: 0;
+}
+
+.container {
+  max-width: 1111px;
+  width: 90%;
+  margin: 0 auto;
+}
+.container.skinny {
+  max-width: 888px;
+}
+.container.skinnier {
+  max-width: 555px;
+}
+
+/* Buttons */
+
+.Button {
+  background: var(--color-primary);
+  color: white;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  font-size: 1.4rem;
+  display: inline-block;
+  padding: 1.25rem 3rem;
+  border: none;
+  -webkit-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border-radius: var(--borderRadius-10);
+}
+.Button:hover,
+.Button:focus {
+  background: var(--color-primary-light);
+  outline: none;
+}
+.Button[disabled] {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: progress;
+}
+.Button.Button--inverted {
+  background: white;
+  border-color: white;
+  color: var(--color-primary);
+}
+.Button.Button--inverted:hover,
+.Button.Button--inverted:focus {
+  background: transparent;
+  border-color: currentColor;
+  color: white;
+  background-image: -webkit-linear-gradient(
+      rgba(255, 255, 255, 0.1),
+      rgba(0, 0, 0, 0)
+    ),
+    -webkit-linear-gradient(122deg, rgba(255, 255, 255, 0), rgba(
+            255,
+            255,
+            255,
+            0.05
+          )
+          50%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0));
+  background-image: -o-linear-gradient(
+      rgba(255, 255, 255, 0.1),
+      rgba(0, 0, 0, 0)
+    ),
+    -o-linear-gradient(122deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.05)
+          50%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0));
+  background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0)),
+    linear-gradient(
+      -32deg,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.05) 50%,
+      rgba(255, 255, 255, 0) 50%,
+      rgba(255, 255, 255, 0)
+    );
 }

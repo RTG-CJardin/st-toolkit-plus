@@ -20,6 +20,8 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 
 ## Learn More
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/7b3c6890-2bd1-4597-bd56-71d54151ce7f/deploy-status)](https://app.netlify.com/sites/pedantic-franklin-c986e5/deploys)
+
 To learn more about Next.js, take a look at the following resources:
 
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.

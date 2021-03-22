@@ -1,0 +1,9 @@
+// Home.module.scss
+
+.item {
+  font-size: 150%;
+}
+
+.item + .item {
+  margin-left: 1em;
+}
