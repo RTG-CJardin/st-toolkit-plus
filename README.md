@@ -1,6 +1,5 @@
-# Shop Titans Toolkit -- Upgraded
-
-## st-toolkit-upgraded
+# Shop Titans Toolkit Plus
+## st-toolkit-plus
 
 This is the mono-repo for the fanmade Shop Titans community toolkit
 
